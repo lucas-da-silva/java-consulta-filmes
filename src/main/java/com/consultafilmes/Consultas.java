@@ -1,4 +1,4 @@
-package com.trybe.consultafilmes;
+package com.consultafilmes;
 
 import java.util.AbstractMap;
 import java.util.Collection;
