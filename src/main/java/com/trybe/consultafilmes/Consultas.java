@@ -1,7 +1,6 @@
 package com.trybe.consultafilmes;
 
-import static java.util.Collections.emptyMap;
-
+import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -75,6 +74,13 @@ public class Consultas {
    * conjunto de filmes que se encaixam na categoria da chave correspondente.</p>
    */
   public Map<String, Set<Filme>> filmesLancadosNoAnoAgrupadosPorCategoria(int ano) {
-    return emptyMap(); // TODO: Implementar (bônus).
+    return filmes.stream()
+        .filter(filme -> filme.anoDeLancamento == ano)
+        .flatMap(filme -> filme.categorias.stream()
+            .map(categoria -> new AbstractMap.SimpleEntry<>(categoria, filme)))
+        .collect(Collectors.groupingBy(
+            AbstractMap.SimpleEntry::getKey,
+            Collectors.mapping(AbstractMap.SimpleEntry::getValue, Collectors.toSet())
+        ));
   }
 }
