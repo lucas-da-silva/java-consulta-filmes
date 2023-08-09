@@ -43,7 +43,12 @@ public class Consultas {
    * seu nome como um dos itens do campo `diretores` do mesmo filme.</p>
    */
   public List<String> atoresQueAtuaramEmFilmesDoDiretorEmOrdemAlfabetica(String diretor) {
-    return emptyList(); // TODO: Implementar.
+    return this.filmes.stream()
+        .filter(filme -> filme.diretores.contains((diretor)))
+        .flatMap(filme -> filme.atores.stream())
+        .distinct()
+        .sorted()
+        .collect(Collectors.toList());
   }
 
   /**
