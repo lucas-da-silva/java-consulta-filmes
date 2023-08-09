@@ -1,9 +1,9 @@
 package com.trybe.consultafilmes;
 
-import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,7 +60,11 @@ public class Consultas {
    * pelo menos um dos itens do campo `diretores` também é um item do campo `atores`.</p>
    */
   public List<Filme> filmesEmQuePeloMenosUmDiretorAtuouMaisRecentesPrimeiro() {
-    return emptyList(); // TODO: Implementar.
+    return this.filmes.stream()
+        .filter(filme -> filme.atores.stream().anyMatch(filme.diretores::contains))
+        .sorted(Comparator.comparingInt((Filme filme) -> filme.anoDeLancamento).reversed())
+        .distinct()
+        .collect(Collectors.toList());
   }
 
   /**
