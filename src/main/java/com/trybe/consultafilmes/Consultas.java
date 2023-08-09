@@ -2,12 +2,12 @@ package com.trybe.consultafilmes;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
-import static java.util.Collections.emptySet;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Consultas {
 
@@ -18,15 +18,19 @@ public class Consultas {
   }
 
   /**
-   * Consulta 1: a partir da coleção de filmes desta classe, este método retorna o conjunto
-   * de atores que interpretaram a si próprios em pelo menos um desses filmes.
+   * Consulta 1: a partir da coleção de filmes desta classe, este método retorna o conjunto de
+   * atores que interpretaram a si próprios em pelo menos um desses filmes.
    *
    * <p>Considera-se "atores que interpretaram a si próprios" aqueles que têm o seu nome como
-   * uma das chaves do Map `atoresPorPersonagem` e também como um dos itens pertencentes ao
-   * conjunto associado a esta mesma chave.</p>
+   * uma das chaves do Map `atoresPorPersonagem` e também como um dos itens pertencentes ao conjunto
+   * associado a esta mesma chave.</p>
    */
   public Set<String> atoresQueInterpretaramSiProprios() {
-    return emptySet(); // TODO: Implementar.
+    return this.filmes.stream()
+        .flatMap(filme -> filme.atoresPorPersonagem.entrySet().stream())
+        .filter(entry -> entry.getValue().contains(entry.getKey()))
+        .map(Map.Entry::getKey)
+        .collect(Collectors.toSet());
   }
 
   /**
@@ -35,8 +39,8 @@ public class Consultas {
    * em ordem alfabética.
    *
    * <p>Considera-se que um ator tenha atuado em um filme de um determinado diretor se ele tem o
-   * seu nome como um dos itens do campo `atores`, ao mesmo tempo em que o diretor em questão
-   * tem o seu nome como um dos itens do campo `diretores` do mesmo filme.</p>
+   * seu nome como um dos itens do campo `atores`, ao mesmo tempo em que o diretor em questão tem o
+   * seu nome como um dos itens do campo `diretores` do mesmo filme.</p>
    */
   public List<String> atoresQueAtuaramEmFilmesDoDiretorEmOrdemAlfabetica(String diretor) {
     return emptyList(); // TODO: Implementar.
